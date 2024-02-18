@@ -5,4 +5,4 @@
 //  Created by Ohm Patel  on 2/18/24.
 //
 
-"ContentView.WelcomeMessage" = “Good morning, %@!";
+"ContentView.WelcomeMessage" = "Good morning, %@!";
