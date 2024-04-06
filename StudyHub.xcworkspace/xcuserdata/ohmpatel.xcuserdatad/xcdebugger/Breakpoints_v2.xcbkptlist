@@ -3,4 +3,54 @@
    uuid = "E72F2000-CA5C-440E-9D3E-1FCD34C312A2"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8EEBE2F7-D2C4-4E93-AAAE-32FBBC5129D4"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StudyHub/FriendsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
+            landmarkName = "previews"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "8EEBE2F7-D2C4-4E93-AAAE-32FBBC5129D4 - f088ccfd192e974d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.shadow(color: SwiftUI.Color, radius: CoreGraphics.CGFloat, x: CoreGraphics.CGFloat, y: CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, SwiftUI.VStack&lt;SwiftUI.TupleView&lt;(SwiftUI.Text, SwiftUI.Text, SwiftUI.Text)&gt;&gt;, SwiftUI.Spacer)&gt; in StudyHub.FriendRow.body.getter : some"
+                  moduleName = "StudyHub"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ohmpatel/Developer/StudyHub/StudyHub/FriendsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "65"
+                  endingLineNumber = "65"
+                  offsetFromSymbolStart = "3008">
+               </Location>
+               <Location
+                  uuid = "8EEBE2F7-D2C4-4E93-AAAE-32FBBC5129D4 - 4cfba0ffbeb07f65"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static StudyHub.FriendsView_Previews.previews.getter : some"
+                  moduleName = "StudyHub"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/ohmpatel/Developer/StudyHub/StudyHub/FriendsView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "63"
+                  endingLineNumber = "63"
+                  offsetFromSymbolStart = "68">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>
