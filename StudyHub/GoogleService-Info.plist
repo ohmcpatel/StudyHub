@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCUMzpF4TAfQAQ3ZUxxU_D1PyTZL0v8XFg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>704358653653</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>test.StudyHub</string>
+	<key>PROJECT_ID</key>
+	<string>studyhub-a060d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>studyhub-a060d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:704358653653:ios:268742f8405d3712938c5c</string>
+</dict>
+</plist>
