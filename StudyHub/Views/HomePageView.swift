@@ -1,92 +1,168 @@
-//
-//  HomePageView.swift
-//  
-//
-//  Created by Ohm Patel  on 4/5/24.
-//
 import SwiftUI
 
 struct HomePageView: View {
-    @State private var isUserActive = false
-    @State private var pendingRequests = [
-        "John Doe",
-        "Jane Smith",
-        "Alice Johnson"
-    ]
+    @StateObject private var viewModel = HomePageViewModel()
+    
     var body: some View {
-        VStack(spacing: 20) {
-            HStack {
-                // Greeting message
-                Text("Hello Ohm,")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(Color.black)
-                    .padding(.leading, -150)
-            }
-            // Active status toggle section
-            VStack {
-                Text("Are you active?")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.black)
-                Toggle(isOn: $isUserActive) {
-                    Text("Active")
-                }
-                .padding()
-                .background(Color.white.opacity(0.8))
-                .cornerRadius(10)
-            }
-            .padding()
-            .background(Color.white)
-            .cornerRadius(20)
-            
-            // Pending requests section
-            VStack {
-                Text("Pending Requests")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.black)
-                
-                ForEach(pendingRequests, id: \.self) { request in
-                    HStack {
-                        Text(request)
-                            .foregroundColor(.black)
-                        Spacer()
-                        Button(action: {
-                            // Action for accepting request
-                        }) {
-                            Image(systemName: "checkmark.circle.fill")
-                                .foregroundColor(.green)
-                        }
-                        .padding(.trailing, 10)
+        VStack {
+            GeometryReader { geometry in
+                ScrollView {
+                    VStack(spacing: 20) {
+                        Text("Welcome, \(viewModel.displayName)!")
+                            .font(.largeTitle)
+                            .fontWeight(.heavy)
+                            .foregroundColor(.white)
+                            .padding(.leading)
                         
-                        Button(action: {
-                            // Action for denying request
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .foregroundColor(.red)
+                        // Active status toggle section
+                        VStack {
+                            Text("Are you active?")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                                .foregroundColor(.black)
+                            Toggle(isOn: $viewModel.isUserActive) {
+                                Text("Active")
+                                    .foregroundColor(.black)
+                                    .fontWeight(.semibold)
+                            }
+                            .padding()
+                            .background(Color.white.opacity(0.9))
+                            .cornerRadius(12)
+                            .onChange(of: viewModel.isUserActive) { _ in
+                                viewModel.updateUserActiveStatus()
+                            }
                         }
+                        .padding()
+                        .background(Color.white.opacity(0.95))
+                        .cornerRadius(20)
+                        
+                        // Received invites section (centered)
+                        if !viewModel.pendingRequests.isEmpty {
+                            VStack(alignment: .center, spacing: 10) {
+                                Text("Invites")
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(Color(hex: 0xFA4A0C, opacity: 1))
+                                
+                                ForEach(viewModel.pendingRequests, id: \.self) { request in
+                                    HStack {
+                                        Text(request.name)
+                                            .font(.body)
+                                            .foregroundColor(.black)
+                                        Spacer()
+                                        
+                                        // Custom checkmark button (larger size)
+                                        Button(action: {
+                                            withAnimation(.spring()) {
+                                                viewModel.acceptRequest(request)
+                                            }
+                                        }) {
+                                            Image(systemName: "checkmark.circle.fill")
+                                                .foregroundColor(.white)
+                                                .background(
+                                                    LinearGradient(colors: [.orange, .red], startPoint: .top, endPoint: .bottom)
+                                                )
+                                                .clipShape(Circle())
+                                                .frame(width: 40, height: 40) // Increased size
+                                        }
+                                        
+                                        // Custom X button (larger size)
+                                        Button(action: {
+                                            withAnimation(.spring()) {
+                                                viewModel.denyRequest(request)
+                                            }
+                                        }) {
+                                            Image(systemName: "xmark.circle.fill")
+                                                .foregroundColor(.white)
+                                                .background(
+                                                    LinearGradient(colors: [.orange, .red], startPoint: .top, endPoint: .bottom)
+                                                )
+                                                .clipShape(Circle())
+                                                .frame(width: 40, height: 40) // Increased size
+                                        }
+                                    }
+                                    .padding()
+                                    .background(Color(hex: 0xFA4A0C, opacity: 0.5))
+                                    .cornerRadius(12)
+                                    .padding()
+                                    .padding(.bottom, 5)
+                                }
+                            }
+                            .frame(maxWidth: .infinity) // Center the content
+                            .padding() // Padding to center the content
+                            .background(Color.white.opacity(0.95))
+                            .cornerRadius(20)
+                        }
+
+                        // Sent invites section (centered)
+                        if !viewModel.sentInvites.isEmpty {
+                            VStack(alignment: .center, spacing: 10) {
+                                Text("Sent Invites")
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(Color(hex: 0xFA4A0C, opacity: 1))
+                                
+                                ForEach(viewModel.sentInvites, id: \.self) { invitee in
+                                    HStack {
+                                        Text(invitee.name)
+                                            .font(.body)
+                                            .foregroundColor(.black)
+                                        Spacer()
+                                    }
+                                    .padding()
+                                    .background(Color.white.opacity(0.9))
+                                    .cornerRadius(12)
+                                    .padding(.horizontal)
+                                    .padding(.bottom, 5)
+                                }
+                            }
+                            .frame(maxWidth: .infinity) // Center the content
+                            .padding() // Padding to center the content
+                            .background(Color.white.opacity(0.95))
+                            .cornerRadius(20)
+                        }
+                        
+                        // Accepted requests section (centered)
+                        if !viewModel.acceptedRequests.isEmpty {
+                            VStack(alignment: .center, spacing: 10) {
+                                Text("Accepted Requests (\(viewModel.acceptedRequests.count))")
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(Color(hex: 0xFA4A0C, opacity: 1))
+                                
+                                ForEach(viewModel.acceptedRequests, id: \.self) { accepted in
+                                    HStack {
+                                        Text("\(accepted.name) \(accepted.number)")
+                                            .font(.body)
+                                            .foregroundColor(.black)
+                                        Spacer()
+                                    }
+                                    .padding()
+                                    .background(Color.white.opacity(0.9))
+                                    .cornerRadius(12)
+                                    .padding(.horizontal)
+                                    .padding(.bottom, 5)
+                                }
+                            }
+                            .frame(maxWidth: .infinity) // Center the content
+                            .padding() // Padding to center the content
+                            .background(Color.white.opacity(0.95))
+                            .cornerRadius(20)
+                        }
+                        
                     }
-                    .padding()
-                    .background(Color.white.opacity(0.8))
-                    .cornerRadius(10)
-                    .padding(.horizontal)
-                    .padding(.bottom, 5)
                 }
             }
-            .background(Color.white)
-            .cornerRadius(20)
-            .padding()
-            
-
+            Spacer()
         }
-        .background(Color.white)
-        .edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct HomePageView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomePageView()
+        .padding(20)
+        .background(
+            LinearGradient(colors: [Color(hex: 0xFA4A0C, opacity: 1), .white], startPoint: .top, endPoint: .bottom) // Epic background gradient
+        )
+        .accentColor(Color(hex: 0xFA4A0C, opacity: 1))
+        .onAppear {
+            viewModel.fetchRequests()
+            viewModel.fetchDisplayName()
+        }
     }
 }

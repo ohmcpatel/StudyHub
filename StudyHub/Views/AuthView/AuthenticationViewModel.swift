@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseAuth
+import Firebase
 
 enum AuthenticationState {
   case unauthenticated
@@ -31,7 +32,9 @@ class AuthenticationViewModel: ObservableObject {
   @Published var authenticationState: AuthenticationState = .unauthenticated
   @Published var errorMessage = ""
   @Published var user: User?
-  @Published var displayName = ""
+    
+  private let db = Firestore.firestore()
+
 
   init() {
     registerAuthStateHandler()
@@ -53,7 +56,6 @@ class AuthenticationViewModel: ObservableObject {
       authStateHandler = Auth.auth().addStateDidChangeListener { auth, user in
         self.user = user
         self.authenticationState = user == nil ? .unauthenticated : .authenticated
-        self.displayName = user?.email ?? ""
       }
     }
   }
@@ -102,7 +104,10 @@ extension AuthenticationViewModel {
   func signUpWithEmailPassword() async -> Bool {
     authenticationState = .authenticating
     do  {
-      try await Auth.auth().createUser(withEmail: email, password: password)
+      let authResult = try await Auth.auth().createUser(withEmail: email, password: password)
+      let userRef = db.collection("users").document(authResult.user.uid)
+      let userData: [String: Any] = ["email": email]
+      try await userRef.setData(userData)
       return true
     }
     catch {
