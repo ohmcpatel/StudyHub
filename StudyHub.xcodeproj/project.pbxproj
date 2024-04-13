@@ -12,6 +12,7 @@
 		260B007F2BC37C9D0005BCA4 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B007E2BC37C9D0005BCA4 /* ProfileViewModel.swift */; };
 		260B00822BC580AF0005BCA4 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B00812BC580AF0005BCA4 /* LocationViewModel.swift */; };
 		260B00852BC586290005BCA4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B00842BC586290005BCA4 /* LocationManager.swift */; };
+		260B00882BCB0CEA0005BCA4 /* WebcoursesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B00872BCB0CEA0005BCA4 /* WebcoursesAPI.swift */; };
 		266D4B942B82872F00DE336D /* StudyHubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266D4B932B82872F00DE336D /* StudyHubApp.swift */; };
 		266D4B962B82872F00DE336D /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266D4B952B82872F00DE336D /* HomePageViewController.swift */; };
 		266D4B982B82872F00DE336D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 266D4B972B82872F00DE336D /* Assets.xcassets */; };
@@ -86,6 +87,7 @@
 		260B007E2BC37C9D0005BCA4 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		260B00812BC580AF0005BCA4 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		260B00842BC586290005BCA4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		260B00872BCB0CEA0005BCA4 /* WebcoursesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebcoursesAPI.swift; sourceTree = "<group>"; };
 		266D4B902B82872F00DE336D /* StudyHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		266D4B932B82872F00DE336D /* StudyHubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyHubApp.swift; sourceTree = "<group>"; };
 		266D4B952B82872F00DE336D /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
@@ -223,6 +225,14 @@
 			name = Location;
 			sourceTree = "<group>";
 		};
+		260B00862BCB0CD40005BCA4 /* Canvas */ = {
+			isa = PBXGroup;
+			children = (
+				260B00872BCB0CEA0005BCA4 /* WebcoursesAPI.swift */,
+			);
+			name = Canvas;
+			sourceTree = "<group>";
+		};
 		266D4B872B82872F00DE336D = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +322,7 @@
 		266D4BC72B8292A400DE336D /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				260B00862BCB0CD40005BCA4 /* Canvas */,
 				260B00832BC586180005BCA4 /* Location */,
 				266D4BC82B8292D500DE336D /* Extensions */,
 			);
@@ -633,6 +644,7 @@
 				266D4B962B82872F00DE336D /* HomePageViewController.swift in Sources */,
 				266D4B942B82872F00DE336D /* StudyHubApp.swift in Sources */,
 				26870C452BC0E64300AB7F53 /* LoginView.swift in Sources */,
+				260B00882BCB0CEA0005BCA4 /* WebcoursesAPI.swift in Sources */,
 				26870C062BC0CA7D00AB7F53 /* CalendarView.swift in Sources */,
 				260B007F2BC37C9D0005BCA4 /* ProfileViewModel.swift in Sources */,
 				260B007B2BC375D60005BCA4 /* HomePageViewModel.swift in Sources */,

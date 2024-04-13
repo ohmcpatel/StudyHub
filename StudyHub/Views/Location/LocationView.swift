@@ -2,34 +2,34 @@ import SwiftUI
 import MapKit
 import Firebase
 
-
 class CustomPointAnnotation: MKPointAnnotation {
-    var friendLocation: (Double, Double)?
-    var uid: String = "" // Additional property for uid
+    var friendLocation: FriendLocation?
 }
 
-
+// Define a struct for the main view
 struct LocationView: View {
     @ObservedObject var viewModel: LocationViewModel
-    @State private var selectedFriend: (Double, Double, String)? = nil
-    
+    @State private var selectedFriend: FriendLocation?
+
     var body: some View {
         ZStack {
+            // MapView to display friends' locations
             MapView(viewModel: viewModel, selectedFriend: $selectedFriend)
                 .onAppear {
                     viewModel.populateCurrentLocation()
                     viewModel.fetchFriendsLocations()
                 }
             
+            // FriendProfileView to display selected friend's profile
             if let friend = selectedFriend {
                 FriendProfileView(friend: friend, isPresented: $selectedFriend, viewModel: viewModel)
                     .transition(.move(edge: .bottom))
             }
         }
     }
-    
 }
 
+// ContentView struct for previews and app entry point
 struct ContentView: View {
     var body: some View {
         LocationView(viewModel: LocationViewModel())
@@ -42,66 +42,62 @@ struct LocationView_Previews: PreviewProvider {
     }
 }
 
+// MapView to display the map with friends' locations
 struct MapView: UIViewRepresentable {
     @ObservedObject var viewModel: LocationViewModel
-    @Binding var selectedFriend: (Double, Double, String)?
-    
+    @Binding var selectedFriend: FriendLocation?
+
     func makeUIView(context: Context) -> MKMapView {
         let mapView = MKMapView(frame: .zero)
         mapView.delegate = context.coordinator
         return mapView
     }
-    
+
     func updateUIView(_ view: MKMapView, context: Context) {
         view.removeAnnotations(view.annotations)
-        
-        let currentLocation = CLLocationCoordinate2D(latitude: viewModel.currentLatitude, longitude: viewModel.currentLongitude)
-//        let currentAnnotation = MKPointAnnotation()
-//        currentAnnotation.coordinate = currentLocation
-//        currentAnnotation.title = "Current Location"
-//        view.addAnnotation(currentAnnotation)
-        print(viewModel.friendsLocations)
-        for friendLocation in viewModel.friendsLocations {
-            print("friendLocation \(friendLocation)")
 
-            let friendCoordinate = CLLocationCoordinate2D(latitude: friendLocation.0, longitude: friendLocation.1)
+        let currentLocation = CLLocationCoordinate2D(latitude: viewModel.currentLatitude, longitude: viewModel.currentLongitude)
+
+        // Add friends' locations as annotations
+        for friendLocation in viewModel.friendsLocations {
+            let friendCoordinate = CLLocationCoordinate2D(latitude: friendLocation.latitude, longitude: friendLocation.longitude)
             let friendAnnotation = CustomPointAnnotation()
             friendAnnotation.coordinate = friendCoordinate
-            friendAnnotation.uid = friendLocation.2
-            friendAnnotation.title = friendLocation.2
-            friendAnnotation.friendLocation = (friendLocation.0, friendLocation.1)
+            friendAnnotation.friendLocation = friendLocation
+            friendAnnotation.title = friendLocation.name
             view.addAnnotation(friendAnnotation)
-            print("Added friend annotation at: \(friendLocation.0), \(friendLocation.1)")
-
         }
-        
+
+        // Set map region to center around the current location
         let coordinateRegion = MKCoordinateRegion(center: currentLocation, latitudinalMeters: 1000, longitudinalMeters: 1000)
         view.setRegion(coordinateRegion, animated: true)
     }
-    
+
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
-    
+
     class Coordinator: NSObject, MKMapViewDelegate {
         var parent: MapView
-        
+
         init(_ parent: MapView) {
             self.parent = parent
         }
-        
+
+        // When a friend annotation is selected, update the selected friend state
         func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-            if let annotation = view.annotation as? CustomPointAnnotation {
-                parent.selectedFriend = (annotation.friendLocation!.0, annotation.friendLocation!.1, annotation.uid)
+            if let annotation = view.annotation as? CustomPointAnnotation,
+               let friendLocation = annotation.friendLocation {
+                parent.selectedFriend = friendLocation
             }
         }
     }
 }
 
-
+// FriendProfileView to display a selected friend's profile
 struct FriendProfileView: View {
-    var friend: (Double, Double, String)
-    @Binding var isPresented: (Double, Double, String)?
+    var friend: FriendLocation
+    @Binding var isPresented: FriendLocation?
     @ObservedObject var viewModel: LocationViewModel
     var uid = Auth.auth().currentUser!.uid
 
@@ -113,15 +109,19 @@ struct FriendProfileView: View {
                 .onTapGesture {
                     isPresented = nil
                 }
-            
+
+            // Profile details and request button
             VStack(spacing: 20) {
                 Text("Friend's Profile")
                     .font(.title)
                     .foregroundColor(Color(hex: 0xFA4A0C, opacity: 1))
                 
+                // Pass the friend's name to ProfileDetailView
                 ProfileDetailView(friend: friend, viewModel: viewModel)
                 
-                Button(action: {viewModel.sendInviteFromTo(uid1: uid, uid2: friend.2)
+                // Request to Study button
+                Button(action: {
+                    viewModel.sendInviteFromTo(uid1: uid, uid2: friend.documentID)
                 }) {
                     Text("Request to Study")
                         .foregroundColor(.black)
@@ -140,24 +140,27 @@ struct FriendProfileView: View {
     }
 }
 
-
+// ProfileDetailView to display friend's profile details
 struct ProfileDetailView: View {
-    var friend: (Double, Double, String)
+    var friend: FriendLocation
     @ObservedObject var viewModel: LocationViewModel
     var uid = Auth.auth().currentUser!.uid
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(viewModel.name)
+            // Display the friend's name
+            Text(friend.name)
                 .font(.headline)
+
+            // Display shared classes
             ForEach(viewModel.classes, id: \.self) { className in
-                            Text(className)
-                                .font(.subheadline)
-                        }
+                Text(className)
+                    .font(.subheadline)
+            }
         }
-        .onAppear{
-            viewModel.fetchUserName(uid: friend.2)
-            viewModel.fetchSharedClasses(uidOne: friend.2, uidTwo: uid)
+        .onAppear {
+            // Fetch shared classes
+            viewModel.fetchSharedClasses(uidOne: friend.documentID, uidTwo: uid)
         }
     }
 }
