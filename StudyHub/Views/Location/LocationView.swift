@@ -13,6 +13,14 @@ struct LocationView: View {
 
     var body: some View {
         ZStack {
+            // LinearGradient for the background
+            LinearGradient(
+                gradient: Gradient(colors: [Color(hex: 0xFA4A0C, opacity: 1), .white]), // Customize colors
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .edgesIgnoringSafeArea(.all) 
+
             // MapView to display friends' locations
             MapView(viewModel: viewModel, selectedFriend: $selectedFriend)
                 .onAppear {
@@ -112,7 +120,7 @@ struct FriendProfileView: View {
 
             // Profile details and request button
             VStack(spacing: 20) {
-                Text("Friend's Profile")
+                Text("\(friend.name)'s Profile")
                     .font(.title)
                     .foregroundColor(Color(hex: 0xFA4A0C, opacity: 1))
                 
@@ -140,27 +148,50 @@ struct FriendProfileView: View {
     }
 }
 
-// ProfileDetailView to display friend's profile details
+import SwiftUI
+import FirebaseAuth
+
+// ProfileDetailView to display a friend's profile details
 struct ProfileDetailView: View {
     var friend: FriendLocation
     @ObservedObject var viewModel: LocationViewModel
     var uid = Auth.auth().currentUser!.uid
-
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 15) {
             // Display the friend's name
-            Text(friend.name)
-                .font(.headline)
 
+            
+            // Section header for shared classes
+            Text("Here are the classes you share:")
+                .font(.headline)
+                .padding(.bottom, 5)
+            
             // Display shared classes
-            ForEach(viewModel.classes, id: \.self) { className in
-                Text(className)
+            if viewModel.classes.isEmpty {
+                Text("No classes shared yet.")
                     .font(.subheadline)
+                    .foregroundColor(.secondary)
+            } else {
+                VStack(alignment: .leading, spacing: 5) {
+                    ForEach(viewModel.classes, id: \.self) { className in
+                        HStack {
+                            Circle()
+                                .frame(width: 8, height: 8)
+                                .foregroundColor(.blue)
+                            Text(className)
+                                .font(.subheadline)
+                        }
+                    }
+                }
+                .padding(.leading, 10) // Add padding to the left for the list
             }
         }
+        .padding()
         .onAppear {
             // Fetch shared classes
             viewModel.fetchSharedClasses(uidOne: friend.documentID, uidTwo: uid)
         }
     }
 }
+

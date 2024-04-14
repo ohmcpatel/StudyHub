@@ -8,7 +8,6 @@
 import Foundation
 import FirebaseAuth
 import Firebase
-import CourseService
 
 enum AuthenticationState {
   case unauthenticated

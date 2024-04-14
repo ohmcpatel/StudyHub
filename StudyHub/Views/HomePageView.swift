@@ -86,6 +86,7 @@ struct HomePageView: View {
                                     .cornerRadius(12)
                                     .padding()
                                     .padding(.bottom, 5)
+                                    .shadow(color: Color(hex: 0x9A9A9D, opacity: 0.6), radius: 3, x: 0, y: 2)
                                 }
                             }
                             .frame(maxWidth: .infinity) // Center the content
@@ -114,6 +115,7 @@ struct HomePageView: View {
                                     .cornerRadius(12)
                                     .padding(.horizontal)
                                     .padding(.bottom, 5)
+                                    .shadow(color: Color(hex: 0x9A9A9D, opacity: 0.6), radius: 3, x: 0, y: 2)
                                 }
                             }
                             .frame(maxWidth: .infinity) // Center the content
@@ -132,7 +134,7 @@ struct HomePageView: View {
                                 
                                 ForEach(viewModel.acceptedRequests, id: \.self) { accepted in
                                     HStack {
-                                        Text("\(accepted.name) \(accepted.number)")
+                                        Text("Contact \(accepted.name) at \n \(viewModel.formatPhoneNumber(accepted.number))")
                                             .font(.body)
                                             .foregroundColor(.black)
                                         Spacer()
@@ -142,6 +144,9 @@ struct HomePageView: View {
                                     .cornerRadius(12)
                                     .padding(.horizontal)
                                     .padding(.bottom, 5)
+                                    .frame(maxWidth: .infinity, alignment: .center) // Center the HStack
+                                    .shadow(color: Color(hex: 0x9A9A9D, opacity: 0.6), radius: 3, x: 0, y: 2)
+
                                 }
                             }
                             .frame(maxWidth: .infinity) // Center the content
