@@ -21,15 +21,39 @@ class LocationViewModel: ObservableObject {
     let locationManager = LocationManager()
     
     func populateCurrentLocation() {
+        // Get the current user ID from Firebase Authentication
+        guard let uid = Auth.auth().currentUser?.uid else {
+            print("Error: User not authenticated.")
+            return
+        }
+        
+        // Get the current location using the location manager
         locationManager.getCurrentLocation { coordinate, error in
             if let coordinate = coordinate {
+                // Update the published properties for current location
                 self.currentLatitude = coordinate.latitude
                 self.currentLongitude = coordinate.longitude
+                
+                // Create a reference to the current user's document in the "users" collection
+                let userRef = self.db.collection("users").document(uid)
+                
+                // Update the current user's location in Firestore
+                userRef.updateData([
+                    "latitude": coordinate.latitude,
+                    "longitude": coordinate.longitude
+                ]) { error in
+                    if let error = error {
+                        print("Error updating current location for user \(uid): \(error.localizedDescription)")
+                    } else {
+                        print("Successfully updated current location for user \(uid).")
+                    }
+                }
             } else if let error = error {
                 print("Error getting location: \(error.localizedDescription)")
             }
         }
     }
+
 
     func fetchFriendsLocations() {
         guard let uid = Auth.auth().currentUser?.uid else {

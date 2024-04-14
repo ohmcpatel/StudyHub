@@ -30,9 +30,9 @@ struct HomePageViewController: View {
                     Image(systemName: "location")
                     Text("Location")
                 }
-            CalendarView()
+            ClassScheduleView()
                 .tabItem {
-                    Image(systemName: "person")
+                    Image(systemName: "calendar")
                     Text("Calendar")
                 }
             ProfileView()

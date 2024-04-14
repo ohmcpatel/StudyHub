@@ -13,6 +13,8 @@
 		260B00822BC580AF0005BCA4 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B00812BC580AF0005BCA4 /* LocationViewModel.swift */; };
 		260B00852BC586290005BCA4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B00842BC586290005BCA4 /* LocationManager.swift */; };
 		260B00882BCB0CEA0005BCA4 /* WebcoursesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B00872BCB0CEA0005BCA4 /* WebcoursesAPI.swift */; };
+		260B008B2BCB37BA0005BCA4 /* ClassScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B008A2BCB37BA0005BCA4 /* ClassScheduleViewModel.swift */; };
+		260B008D2BCC207B0005BCA4 /* CourseUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B008C2BCC207B0005BCA4 /* CourseUpdateViewController.swift */; };
 		266D4B942B82872F00DE336D /* StudyHubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266D4B932B82872F00DE336D /* StudyHubApp.swift */; };
 		266D4B962B82872F00DE336D /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266D4B952B82872F00DE336D /* HomePageViewController.swift */; };
 		266D4B982B82872F00DE336D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 266D4B972B82872F00DE336D /* Assets.xcassets */; };
@@ -22,7 +24,7 @@
 		266D4BB12B82873000DE336D /* StudyHubUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266D4BB02B82873000DE336D /* StudyHubUITestsLaunchTests.swift */; };
 		266D4BC22B8290B500DE336D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 266D4BC42B8290B500DE336D /* Localizable.strings */; };
 		266D4BCA2B8292EC00DE336D /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266D4BC92B8292EC00DE336D /* StringExtensions.swift */; };
-		26870C062BC0CA7D00AB7F53 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C052BC0CA7D00AB7F53 /* CalendarView.swift */; };
+		26870C062BC0CA7D00AB7F53 /* ClassScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C052BC0CA7D00AB7F53 /* ClassScheduleView.swift */; };
 		26870C082BC0CD8F00AB7F53 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C072BC0CD8F00AB7F53 /* LocationView.swift */; };
 		26870C0C2BC0CE5D00AB7F53 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C0B2BC0CE5D00AB7F53 /* ProfileView.swift */; };
 		26870C0E2BC0CE8200AB7F53 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C0D2BC0CE8200AB7F53 /* SettingsView.swift */; };
@@ -88,6 +90,8 @@
 		260B00812BC580AF0005BCA4 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		260B00842BC586290005BCA4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		260B00872BCB0CEA0005BCA4 /* WebcoursesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebcoursesAPI.swift; sourceTree = "<group>"; };
+		260B008A2BCB37BA0005BCA4 /* ClassScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassScheduleViewModel.swift; sourceTree = "<group>"; };
+		260B008C2BCC207B0005BCA4 /* CourseUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUpdateViewController.swift; sourceTree = "<group>"; };
 		266D4B902B82872F00DE336D /* StudyHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		266D4B932B82872F00DE336D /* StudyHubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyHubApp.swift; sourceTree = "<group>"; };
 		266D4B952B82872F00DE336D /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
@@ -101,7 +105,7 @@
 		266D4BC32B8290B500DE336D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		266D4BC52B82911800DE336D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		266D4BC92B8292EC00DE336D /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
-		26870C052BC0CA7D00AB7F53 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		26870C052BC0CA7D00AB7F53 /* ClassScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassScheduleView.swift; sourceTree = "<group>"; };
 		26870C072BC0CD8F00AB7F53 /* LocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationView.swift; sourceTree = "<group>"; };
 		26870C0B2BC0CE5D00AB7F53 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		26870C0D2BC0CE8200AB7F53 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -233,6 +237,24 @@
 			name = Canvas;
 			sourceTree = "<group>";
 		};
+		260B00892BCB379B0005BCA4 /* ClassSchedule */ = {
+			isa = PBXGroup;
+			children = (
+				26870C052BC0CA7D00AB7F53 /* ClassScheduleView.swift */,
+				260B008A2BCB37BA0005BCA4 /* ClassScheduleViewModel.swift */,
+			);
+			path = ClassSchedule;
+			sourceTree = "<group>";
+		};
+		260B008E2BCC280C0005BCA4 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				26870C0D2BC0CE8200AB7F53 /* SettingsView.swift */,
+				260B008C2BCC207B0005BCA4 /* CourseUpdateViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		266D4B872B82872F00DE336D = {
 			isa = PBXGroup;
 			children = (
@@ -341,10 +363,10 @@
 			isa = PBXGroup;
 			children = (
 				260B00792BC375C60005BCA4 /* HomePage */,
-				26870C052BC0CA7D00AB7F53 /* CalendarView.swift */,
+				260B00892BCB379B0005BCA4 /* ClassSchedule */,
 				260B00802BC580240005BCA4 /* Location */,
 				260B007C2BC37A4A0005BCA4 /* Profile */,
-				26870C0D2BC0CE8200AB7F53 /* SettingsView.swift */,
+				260B008E2BCC280C0005BCA4 /* Settings */,
 				260B007D2BC37A8B0005BCA4 /* AuthView */,
 				266D4B952B82872F00DE336D /* HomePageViewController.swift */,
 			);
@@ -643,9 +665,11 @@
 				26870C082BC0CD8F00AB7F53 /* LocationView.swift in Sources */,
 				266D4B962B82872F00DE336D /* HomePageViewController.swift in Sources */,
 				266D4B942B82872F00DE336D /* StudyHubApp.swift in Sources */,
+				260B008B2BCB37BA0005BCA4 /* ClassScheduleViewModel.swift in Sources */,
 				26870C452BC0E64300AB7F53 /* LoginView.swift in Sources */,
 				260B00882BCB0CEA0005BCA4 /* WebcoursesAPI.swift in Sources */,
-				26870C062BC0CA7D00AB7F53 /* CalendarView.swift in Sources */,
+				260B008D2BCC207B0005BCA4 /* CourseUpdateViewController.swift in Sources */,
+				26870C062BC0CA7D00AB7F53 /* ClassScheduleView.swift in Sources */,
 				260B007F2BC37C9D0005BCA4 /* ProfileViewModel.swift in Sources */,
 				260B007B2BC375D60005BCA4 /* HomePageViewModel.swift in Sources */,
 			);
