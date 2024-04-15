@@ -28,7 +28,6 @@
 		26870C082BC0CD8F00AB7F53 /* LocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C072BC0CD8F00AB7F53 /* LocationView.swift */; };
 		26870C0C2BC0CE5D00AB7F53 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C0B2BC0CE5D00AB7F53 /* ProfileView.swift */; };
 		26870C0E2BC0CE8200AB7F53 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C0D2BC0CE8200AB7F53 /* SettingsView.swift */; };
-		26870C122BC0E24800AB7F53 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C112BC0E24800AB7F53 /* HomePageView.swift */; };
 		26870C142BC0E31900AB7F53 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 26870C132BC0E31900AB7F53 /* GoogleService-Info.plist */; };
 		26870C172BC0E4FC00AB7F53 /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 26870C162BC0E4FC00AB7F53 /* FirebaseAppCheck */; };
 		26870C192BC0E4FC00AB7F53 /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = 26870C182BC0E4FC00AB7F53 /* FirebaseAppDistribution-Beta */; };
@@ -62,6 +61,7 @@
 		26870C522BC0E7A200AB7F53 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C512BC0E7A200AB7F53 /* AuthenticationView.swift */; };
 		26870C542BC0E7C500AB7F53 /* AuthenticatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C532BC0E7C500AB7F53 /* AuthenticatedView.swift */; };
 		26870C562BC0E7E000AB7F53 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26870C552BC0E7E000AB7F53 /* SignupView.swift */; };
+		3E29F6CA2BCC25F0006A1798 /* HomePageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E29F6C92BCC25F0006A1798 /* HomePageView.swift */; };
 		54F2BE34B51C65F09A832CDB /* Pods_StudyHub_StudyHubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43044546DC46ACAC07CF6116 /* Pods_StudyHub_StudyHubUITests.framework */; };
 		F27728CC6EA1CC79BC1FBDE4 /* Pods_StudyHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17A790F89A4AEF1B01BD93CB /* Pods_StudyHub.framework */; };
 /* End PBXBuildFile section */
@@ -117,6 +117,7 @@
 		26870C532BC0E7C500AB7F53 /* AuthenticatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticatedView.swift; sourceTree = "<group>"; };
 		26870C552BC0E7E000AB7F53 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		26870C592BC2177E00AB7F53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3E29F6C92BCC25F0006A1798 /* HomePageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HomePageView.swift; path = StudyHub/Views/HomePageView.swift; sourceTree = "<group>"; };
 		43044546DC46ACAC07CF6116 /* Pods_StudyHub_StudyHubUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StudyHub_StudyHubUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9406874B2B7F5BA5B61BCD55 /* Pods-StudyHub-StudyHubUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyHub-StudyHubUITests.release.xcconfig"; path = "Target Support Files/Pods-StudyHub-StudyHubUITests/Pods-StudyHub-StudyHubUITests.release.xcconfig"; sourceTree = "<group>"; };
 		99D1624A4E8254E2560CDD56 /* Pods-StudyHubTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudyHubTests.debug.xcconfig"; path = "Target Support Files/Pods-StudyHubTests/Pods-StudyHubTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -258,6 +259,7 @@
 		266D4B872B82872F00DE336D = {
 			isa = PBXGroup;
 			children = (
+				3E29F6C92BCC25F0006A1798 /* HomePageView.swift */,
 				266D4B922B82872F00DE336D /* StudyHub */,
 				266D4BA32B82873000DE336D /* StudyHubTests */,
 				266D4BAD2B82873000DE336D /* StudyHubUITests */,
@@ -652,6 +654,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E29F6CA2BCC25F0006A1798 /* HomePageView.swift in Sources */,
 				26870C0C2BC0CE5D00AB7F53 /* ProfileView.swift in Sources */,
 				26870C522BC0E7A200AB7F53 /* AuthenticationView.swift in Sources */,
 				266D4BCA2B8292EC00DE336D /* StringExtensions.swift in Sources */,
@@ -661,7 +664,6 @@
 				26870C502BC0E77E00AB7F53 /* AuthenticationViewModel.swift in Sources */,
 				260B00852BC586290005BCA4 /* LocationManager.swift in Sources */,
 				260B00822BC580AF0005BCA4 /* LocationViewModel.swift in Sources */,
-				26870C122BC0E24800AB7F53 /* HomePageView.swift in Sources */,
 				26870C082BC0CD8F00AB7F53 /* LocationView.swift in Sources */,
 				266D4B962B82872F00DE336D /* HomePageViewController.swift in Sources */,
 				266D4B942B82872F00DE336D /* StudyHubApp.swift in Sources */,
@@ -845,8 +847,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"StudyHub/Preview Content\"";
-				DEVELOPMENT_TEAM = 6L8Z8BM3KH;
+				DEVELOPMENT_TEAM = WTCZUEDEJ9;
 				ENABLE_PREVIEWS = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StudyHub/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it to your study buddies";
@@ -860,6 +863,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = test.StudyHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -877,8 +881,9 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"StudyHub/Preview Content\"";
-				DEVELOPMENT_TEAM = 6L8Z8BM3KH;
+				DEVELOPMENT_TEAM = WTCZUEDEJ9;
 				ENABLE_PREVIEWS = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StudyHub/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We need your location to show it to your study buddies";
