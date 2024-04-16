@@ -8,11 +8,19 @@ struct HomePageView: View {
             GeometryReader { geometry in
                 ScrollView {
                     VStack(spacing: 20) {
-                        Text("Welcome, \(viewModel.displayName)!")
-                            .font(.largeTitle)
-                            .fontWeight(.heavy)
-                            .foregroundColor(.white)
-                            .padding(.leading)
+                        if viewModel.displayName.isEmpty {
+                                Text("Welcome!")
+                                    .font(.largeTitle)
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(.white)
+                                    .padding(.leading)
+                            } else {
+                                Text("Welcome, \(viewModel.displayName)!")
+                                    .font(.largeTitle)
+                                    .fontWeight(.heavy)
+                                    .foregroundColor(.white)
+                                    .padding(.leading)
+                            }
                         
                         // Active status toggle section
                         VStack {
@@ -134,7 +142,7 @@ struct HomePageView: View {
                                 
                                 ForEach(viewModel.acceptedRequests, id: \.self) { accepted in
                                     HStack {
-                                        Text("Contact \(accepted.name) at \n \(viewModel.formatPhoneNumber(accepted.number))")
+                                        Text("Contact \(accepted.name) at \n \((accepted.number))")
                                             .font(.body)
                                             .foregroundColor(.black)
                                         Spacer()

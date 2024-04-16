@@ -147,8 +147,8 @@ final class HomePageViewModel: ObservableObject {
         // Fetch phone number from Firestore
         db.collection("users").document(uid).getDocument { document, error in
             if let document = document, document.exists {
-                if let name = document.data()?["name"] as? String {
-                        self.displayName = name
+                if let phoneNumber = document.data()?["name"] as? String {
+                        self.displayName = phoneNumber
                 }
             } else {
                 print("Document does not exist")
@@ -242,33 +242,6 @@ final class HomePageViewModel: ObservableObject {
                 let sharedClasses = Array(classesOne.intersection(classesTwo))
                 completion(sharedClasses)
             }
-        }
-    }
-    
-    func formatPhoneNumber(_ phoneNumber: String) -> String {
-        // Remove non-numeric characters
-        let cleaned = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
-        
-        // Check the length of the cleaned number
-        let length = cleaned.count
-        
-        // Format the phone number based on its length
-        if length == 10 {
-            // US phone number pattern (e.g., (123) 456-7890)
-            let areaCode = String(cleaned.prefix(3))
-            let prefix = String(cleaned.dropFirst(3).prefix(3))
-            let lineNumber = String(cleaned.dropFirst(6))
-            return "(\(areaCode)) \(prefix)-\(lineNumber)"
-        } else if length == 11 && cleaned.hasPrefix("1") {
-            // International US phone number pattern (e.g., +1 (123) 456-7890)
-            let countryCode = String(cleaned.prefix(1))
-            let areaCode = String(cleaned.dropFirst(1).prefix(3))
-            let prefix = String(cleaned.dropFirst(4).prefix(3))
-            let lineNumber = String(cleaned.dropFirst(7))
-            return "+\(countryCode) (\(areaCode)) \(prefix)-\(lineNumber)"
-        } else {
-            // Return the original number if it doesn't match any pattern
-            return phoneNumber
         }
     }
 }

@@ -5,29 +5,63 @@ struct ClassScheduleView: View {
     @StateObject private var viewModel = ClassScheduleViewModel()
     
     var body: some View {
-        // A list view to display class data
-        List(viewModel.classData) { classData in
-            VStack(alignment: .leading) {
-                // Display class name
-                Text("Class: \(classData.className)")
-                    .font(.headline)
-                
-                // Display exams and assignments
-                ForEach(classData.examsAndAssignments) { examOrAssignment in
-                    VStack(alignment: .leading) {
-                        Text("Assignment/Exam: \(examOrAssignment.name)")
-                        Text("Due Date: \(examOrAssignment.dueDate, style: .date)")
+        // Display the class data in a list
+        List {
+            // Iterate over each class data
+            ForEach(viewModel.classData) { classData in
+                Section(header: Text(classData.className)
+                            .font(.title2)
+                            .padding()
+                            .background(Color.blue.opacity(0.3))
+                            .cornerRadius(10)
+                            .foregroundColor(.blue)) {
+                    // Iterate over exams and assignments
+                    ForEach(classData.examsAndAssignments) { examOrAssignment in
+                        VStack(alignment: .leading, spacing: 5) {
+                            HStack {
+                                Text("📚")
+                                    .font(.title)
+                                    .padding(.trailing, 5)
+                                Text(examOrAssignment.name)
+                                    .font(.headline)
+                            }
+                            
+                            HStack {
+                                Text("📅")
+                                    .font(.title)
+                                    .padding(.trailing, 5)
+                                Text("\(examOrAssignment.dueDate, style: .date)")
+                            }
+                        }
+                        .padding(.vertical, 5)
+                    }
+                    
+                    // Display study schedule for the class
+                    if !viewModel.generateStudySchedule(for: classData).isEmpty {
+                        Text("🗓 Study Dates:")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .padding(.top, 5)
+                        
+                        ForEach(viewModel.generateStudySchedule(for: classData), id: \.self) { studyDate in
+                            HStack {
+                                Text("🕒")
+                                    .font(.title)
+                                    .padding(.trailing, 5)
+                                Text("\(studyDate, style: .date)")
+                            }
+                            .padding(.vertical, 3)
+                        }
                     }
                 }
-                
-                // Generate and display study schedule for the class
-                Text("Study Dates:")
-                ForEach(viewModel.generateStudySchedule(for: classData), id: \.self) { studyDate in
-                    Text("\(studyDate, style: .date)")
-                }
+                .padding()
+                .background(Color(.systemGray6))
+                .cornerRadius(10)
+                .padding(.vertical, 5)
             }
-            .padding()
         }
+        .listStyle(GroupedListStyle())
+        .navigationTitle("Class Schedule")
         .onAppear {
             // Load JSON data (replace with your JSON data source)
             // Here we're just providing an example JSON data string
