@@ -12,7 +12,7 @@
 		260B007F2BC37C9D0005BCA4 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B007E2BC37C9D0005BCA4 /* ProfileViewModel.swift */; };
 		260B00822BC580AF0005BCA4 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B00812BC580AF0005BCA4 /* LocationViewModel.swift */; };
 		260B00852BC586290005BCA4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B00842BC586290005BCA4 /* LocationManager.swift */; };
-		260B00882BCB0CEA0005BCA4 /* WebcoursesAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B00872BCB0CEA0005BCA4 /* WebcoursesAPI.swift */; };
+		260B00882BCB0CEA0005BCA4 /* CanvasAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B00872BCB0CEA0005BCA4 /* CanvasAPIManager.swift */; };
 		260B008B2BCB37BA0005BCA4 /* ClassScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B008A2BCB37BA0005BCA4 /* ClassScheduleViewModel.swift */; };
 		260B008D2BCC207B0005BCA4 /* CourseUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260B008C2BCC207B0005BCA4 /* CourseUpdateViewController.swift */; };
 		266D4B942B82872F00DE336D /* StudyHubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 266D4B932B82872F00DE336D /* StudyHubApp.swift */; };
@@ -89,7 +89,7 @@
 		260B007E2BC37C9D0005BCA4 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		260B00812BC580AF0005BCA4 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		260B00842BC586290005BCA4 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		260B00872BCB0CEA0005BCA4 /* WebcoursesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebcoursesAPI.swift; sourceTree = "<group>"; };
+		260B00872BCB0CEA0005BCA4 /* CanvasAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasAPIManager.swift; sourceTree = "<group>"; };
 		260B008A2BCB37BA0005BCA4 /* ClassScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassScheduleViewModel.swift; sourceTree = "<group>"; };
 		260B008C2BCC207B0005BCA4 /* CourseUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseUpdateViewController.swift; sourceTree = "<group>"; };
 		266D4B902B82872F00DE336D /* StudyHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StudyHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,7 +232,7 @@
 		260B00862BCB0CD40005BCA4 /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
-				260B00872BCB0CEA0005BCA4 /* WebcoursesAPI.swift */,
+				260B00872BCB0CEA0005BCA4 /* CanvasAPIManager.swift */,
 			);
 			name = Canvas;
 			sourceTree = "<group>";
@@ -667,7 +667,7 @@
 				266D4B942B82872F00DE336D /* StudyHubApp.swift in Sources */,
 				260B008B2BCB37BA0005BCA4 /* ClassScheduleViewModel.swift in Sources */,
 				26870C452BC0E64300AB7F53 /* LoginView.swift in Sources */,
-				260B00882BCB0CEA0005BCA4 /* WebcoursesAPI.swift in Sources */,
+				260B00882BCB0CEA0005BCA4 /* CanvasAPIManager.swift in Sources */,
 				260B008D2BCC207B0005BCA4 /* CourseUpdateViewController.swift in Sources */,
 				26870C062BC0CA7D00AB7F53 /* ClassScheduleView.swift in Sources */,
 				260B007F2BC37C9D0005BCA4 /* ProfileViewModel.swift in Sources */,

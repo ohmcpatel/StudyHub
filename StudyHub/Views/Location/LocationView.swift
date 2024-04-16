@@ -13,13 +13,6 @@ struct LocationView: View {
 
     var body: some View {
         ZStack {
-            // LinearGradient for the background
-            LinearGradient(
-                gradient: Gradient(colors: [Color(hex: 0xFA4A0C, opacity: 1), .white]), // Customize colors
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .edgesIgnoringSafeArea(.all) 
 
             // MapView to display friends' locations
             MapView(viewModel: viewModel, selectedFriend: $selectedFriend)

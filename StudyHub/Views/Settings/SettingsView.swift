@@ -14,20 +14,20 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $isPresentingCourseUpdateVC) {
                 // Present the view controller
-                CourseUpdateViewControllerWrapper()
+//                CourseUpdateViewControllerWrapper()
             }
         }
     }
 }
 
-// Create a UIViewControllerRepresentable wrapper for the view controller
-struct CourseUpdateViewControllerWrapper: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> CourseUpdateViewController {
-        // Return an instance of your view controller
-        return CourseUpdateViewController()
-    }
-
-    func updateUIViewController(_ uiViewController: CourseUpdateViewController, context: Context) {
-        // No updates needed in this case
-    }
-}
+//// Create a UIViewControllerRepresentable wrapper for the view controller
+//struct CourseUpdateViewControllerWrapper: UIViewControllerRepresentable {
+//    func makeUIViewController(context: Context) -> CourseUpdateViewController {
+//        // Return an instance of your view controller
+//        return CourseUpdateViewController()
+//    }
+//
+//    func updateUIViewController(_ uiViewController: CourseUpdateViewController, context: Context) {
+//        // No updates needed in this case
+//    }
+//}

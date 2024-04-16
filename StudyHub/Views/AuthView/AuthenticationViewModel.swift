@@ -34,9 +34,13 @@ class AuthenticationViewModel: ObservableObject {
   @Published var user: User?
     
   private let db = Firestore.firestore()
+  let canvasAPIManager: CanvasAPIManager
 
 
   init() {
+  canvasAPIManager = CanvasAPIManager(baseApiUrl: "https://canvas.instructure.com/api/v1/courses",
+                                              accessToken: "1158~lMZqTUXRWvAV92tiPEIVrVKwXuo2rXVkaU0aWUCTaqXKjssewdA",
+                                              enrollmentState: "active")
     registerAuthStateHandler()
 
     $flow
@@ -47,6 +51,8 @@ class AuthenticationViewModel: ObservableObject {
           : !(email.isEmpty || password.isEmpty || confirmPassword.isEmpty)
       }
       .assign(to: &$isValid)
+      
+      
   }
 
   private var authStateHandler: AuthStateDidChangeListenerHandle?
@@ -108,6 +114,7 @@ extension AuthenticationViewModel {
       let userRef = db.collection("users").document(authResult.user.uid)
       let userData: [String: Any] = ["email": email]
       try await userRef.setData(userData)
+      fetchCourseData()
       return true
     }
     catch {
@@ -138,4 +145,26 @@ extension AuthenticationViewModel {
       return false
     }
   }
+    
+    func fetchCourseData() {
+            // Use the API manager to fetch course data
+            canvasAPIManager.fetchCourseData { result in
+                switch result {
+                case .success(let jsonData):
+                    // Process the JSON data
+                    self.canvasAPIManager.parseJson(jsonData: jsonData) { parseResult in
+                        switch parseResult {
+                        case .success(let results):
+                            // Handle parsed results
+                            print("Parsed results: \(results)")
+                        case .failure(let error):
+                            print("Error parsing JSON data:", error.localizedDescription)
+                        }
+                    }
+                    
+                case .failure(let error):
+                    print("Error fetching data:", error.localizedDescription)
+                }
+            }
+        }
 }
