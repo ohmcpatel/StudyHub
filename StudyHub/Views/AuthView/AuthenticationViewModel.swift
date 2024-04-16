@@ -3,6 +3,7 @@
 //  StudyHub
 //
 //  Created by Ohm Patel  on 4/5/24.
+//  Updated by Trever Jones on 4/8/24
 //
 
 import Foundation
@@ -22,65 +23,75 @@ enum AuthenticationFlow {
 
 @MainActor
 class AuthenticationViewModel: ObservableObject {
-  @Published var email = ""
-  @Published var password = ""
-  @Published var confirmPassword = ""
-
-  @Published var flow: AuthenticationFlow = .login
-
-  @Published var isValid  = false
-  @Published var authenticationState: AuthenticationState = .unauthenticated
-  @Published var errorMessage = ""
-  @Published var user: User?
+    @Published var email = ""
+    @Published var password = ""
+    @Published var confirmPassword = ""
     
-  private let db = Firestore.firestore()
-
-  init() {
-    registerAuthStateHandler()
-
-    $flow
-      .combineLatest($email, $password, $confirmPassword)
-      .map { flow, email, password, confirmPassword in
-        flow == .login
-          ? !(email.isEmpty || password.isEmpty)
-          : !(email.isEmpty || password.isEmpty || confirmPassword.isEmpty)
-      }
-      .assign(to: &$isValid)
-  }
-
-  private var authStateHandler: AuthStateDidChangeListenerHandle?
-
-  func registerAuthStateHandler() {
-    if authStateHandler == nil {
-      authStateHandler = Auth.auth().addStateDidChangeListener { auth, user in
-        self.user = user
-        self.authenticationState = user == nil ? .unauthenticated : .authenticated
-      }
+    @Published var flow: AuthenticationFlow = .login
+    
+    @Published var isValid  = false
+    @Published var authenticationState: AuthenticationState = .unauthenticated
+    @Published var errorMessage = ""
+    @Published var user: User?
+    
+    private let db = Firestore.firestore()
+    
+    
+    init() {
+        registerAuthStateHandler()
+        
+        $flow
+            .combineLatest($email, $password, $confirmPassword)
+            .map { flow, email, password, confirmPassword in
+                flow == .login
+                ? !(email.isEmpty || password.isEmpty)
+                : !(email.isEmpty || password.isEmpty || confirmPassword.isEmpty)
+            }
+            .assign(to: &$isValid)
     }
-  }
-
-  func switchFlow() {
-    flow = flow == .login ? .signUp : .login
-    errorMessage = ""
-  }
-
-  private func wait() async {
-    do {
-      print("Wait")
-      try await Task.sleep(nanoseconds: 1_000_000_000)
-      print("Done")
+    
+    private var authStateHandler: AuthStateDidChangeListenerHandle?
+    
+    func registerAuthStateHandler() {
+        if authStateHandler == nil {
+            authStateHandler = Auth.auth().addStateDidChangeListener { auth, user in
+                self.user = user
+                self.authenticationState = user == nil ? .unauthenticated : .authenticated
+            }
+        }
     }
-    catch {
-      print(error.localizedDescription)
+    
+    func switchFlow() {
+        flow = flow == .login ? .signUp : .login
+        errorMessage = ""
     }
-  }
-
-  func reset() {
-    flow = .login
-    email = ""
-    password = ""
-    confirmPassword = ""
-  }
+    
+    private func wait() async {
+        do {
+            print("Wait")
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            print("Done")
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func reset() {
+        flow = .login
+        email = ""
+        password = ""
+        confirmPassword = ""
+    }
+    
+    func sendEmailVerification() async {
+        do {
+            try await Auth.auth().currentUser?.sendEmailVerification()
+            
+        } catch {
+            print("Error sending email verification: \(error.localizedDescription)")
+        }
+    }
 }
 
 // MARK: - Email and Password Authentication
@@ -107,7 +118,6 @@ extension AuthenticationViewModel {
       let userRef = db.collection("users").document(authResult.user.uid)
       let userData: [String: Any] = ["email": email]
       try await userRef.setData(userData)
-      fetchCourseData()
       return true
     }
     catch {
@@ -138,26 +148,4 @@ extension AuthenticationViewModel {
       return false
     }
   }
-    
-    func fetchCourseData() {
-            // Use the API manager to fetch course data
-            canvasAPIManager.fetchCourseData { result in
-                switch result {
-                case .success(let jsonData):
-                    // Process the JSON data
-                    self.canvasAPIManager.parseJson(jsonData: jsonData) { parseResult in
-                        switch parseResult {
-                        case .success(let results):
-                            // Handle parsed results
-                            print("Parsed results: \(results)")
-                        case .failure(let error):
-                            print("Error parsing JSON data:", error.localizedDescription)
-                        }
-                    }
-                    
-                case .failure(let error):
-                    print("Error fetching data:", error.localizedDescription)
-                }
-            }
-        }
 }
