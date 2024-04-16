@@ -35,6 +35,11 @@ struct HomePageViewController: View {
                     Image(systemName: "calendar")
                     Text("Calendar")
                 }
+            StudyTimerView()
+                .tabItem{
+                    Image(systemName: "clock")
+                    Text("Timer")
+                }
             ProfileView()
                 .tabItem {
                     Image(systemName: "person")
