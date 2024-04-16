@@ -34,13 +34,8 @@ class AuthenticationViewModel: ObservableObject {
   @Published var user: User?
     
   private let db = Firestore.firestore()
-  let canvasAPIManager: CanvasAPIManager
-
 
   init() {
-  canvasAPIManager = CanvasAPIManager(baseApiUrl: "https://canvas.instructure.com/api/v1/courses",
-                                              accessToken: "1158~lMZqTUXRWvAV92tiPEIVrVKwXuo2rXVkaU0aWUCTaqXKjssewdA",
-                                              enrollmentState: "active")
     registerAuthStateHandler()
 
     $flow
@@ -51,8 +46,6 @@ class AuthenticationViewModel: ObservableObject {
           : !(email.isEmpty || password.isEmpty || confirmPassword.isEmpty)
       }
       .assign(to: &$isValid)
-      
-      
   }
 
   private var authStateHandler: AuthStateDidChangeListenerHandle?
