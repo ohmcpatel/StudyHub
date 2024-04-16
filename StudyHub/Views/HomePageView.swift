@@ -21,7 +21,6 @@ struct HomePageView: View {
                                     .foregroundColor(.white)
                                     .padding(.leading)
                             }
-                        
                         // Active status toggle section
                         VStack {
                             Text("Are you active?")
