@@ -21,7 +21,6 @@ struct HomePageView: View {
                                     .foregroundColor(.white)
                                     .padding(.leading)
                             }
-                        
                         // Active status toggle section
                         VStack {
                             Text("Are you active?")
@@ -131,7 +130,6 @@ struct HomePageView: View {
                             .background(Color.white.opacity(0.95))
                             .cornerRadius(20)
                         }
-                        
                         // Accepted requests section (centered)
                         if !viewModel.acceptedRequests.isEmpty {
                             VStack(alignment: .center, spacing: 10) {
