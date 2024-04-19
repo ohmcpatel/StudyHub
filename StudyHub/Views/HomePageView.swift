@@ -38,6 +38,8 @@ struct HomePageView: View {
                             .onChange(of: viewModel.isUserActive) { _ in
                                 viewModel.updateUserActiveStatus()
                             }
+                            .shadow(color: Color(hex: 0x9A9A9D, opacity: 0.6), radius: 3, x: 0, y: 2)
+
                         }
                         .padding()
                         .background(Color.white.opacity(0.95))

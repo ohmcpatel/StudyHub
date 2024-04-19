@@ -7,7 +7,46 @@ struct ProfileView: View {
     @Environment(\.dismiss) var dismiss
     @State private var presentingConfirmationDialog = false
 
+    // Custom binding for phone number formatting
+    private var formattedPhoneNumberBinding: Binding<String> {
+        Binding(
+            get: {
+                profileViewModel.number
+            },
+            set: { newValue in
+                profileViewModel.number = formatPhoneNumber(newValue)
+            }
+        )
+    }
     
+    private func formatPhoneNumber(_ input: String) -> String {
+        // Remove all non-digit characters
+        let digits = input.filter { $0.isNumber }
+        
+        // Format the number based on length
+        switch digits.count {
+        case 0...3:
+            return digits
+        case 4...6:
+            // Convert integers to String.Index
+            let areaCodeEndIndex = digits.index(digits.startIndex, offsetBy: 3)
+            let areaCode = digits[digits.startIndex..<areaCodeEndIndex]
+            let firstPart = digits[areaCodeEndIndex...]
+            return "(\(areaCode)) \(firstPart)"
+        default:
+            // Convert integers to String.Index
+            let areaCodeEndIndex = digits.index(digits.startIndex, offsetBy: 3)
+            let firstPartEndIndex = digits.index(digits.startIndex, offsetBy: 6)
+            
+            let areaCode = digits[digits.startIndex..<areaCodeEndIndex]
+            let firstPart = digits[areaCodeEndIndex..<firstPartEndIndex]
+            let secondPart = digits[firstPartEndIndex...]
+            
+            return "(\(areaCode)) \(firstPart)-\(secondPart)"
+        }
+    }
+
+
     private func deleteAccount() {
         Task {
             if await viewModel.deleteAccount() {
@@ -32,7 +71,7 @@ struct ProfileView: View {
                         Spacer()
                         Image(systemName: "person.fill")
                             .resizable()
-                            .frame(width: 100 , height: 100)
+                            .frame(width: 100, height: 100)
                             .aspectRatio(contentMode: .fit)
                             .clipShape(Circle())
                             .clipped()
@@ -52,7 +91,7 @@ struct ProfileView: View {
             }
             
             Section(header: Text("Phone Number")) {
-                TextField("Enter your number", text: $profileViewModel.number)
+                TextField("Enter your number", text: formattedPhoneNumberBinding)
             }
             
             Section(header: Text("Email")) {
@@ -101,7 +140,7 @@ struct ProfileView: View {
             profileViewModel.getName()
             profileViewModel.getPhoneNumber()
             profileViewModel.getEmail()
-                }
+        }
     }
 }
 

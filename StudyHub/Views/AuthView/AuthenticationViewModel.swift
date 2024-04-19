@@ -33,6 +33,7 @@ class AuthenticationViewModel: ObservableObject {
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var errorMessage = ""
     @Published var user: User?
+    @Published var apiKey = ""
     
     private let db = Firestore.firestore()
     
@@ -101,6 +102,7 @@ extension AuthenticationViewModel {
     authenticationState = .authenticating
     do {
       try await Auth.auth().signIn(withEmail: self.email, password: self.password)
+      fetchApiKey()
       return true
     }
     catch  {
@@ -148,4 +150,36 @@ extension AuthenticationViewModel {
       return false
     }
   }
-}
+    
+    func setLocalApiKey(API: String) {
+        self.apiKey = API
+    }
+    func fetchApiKey() {
+            // Ensure the user is signed in
+            guard let currentUser = Auth.auth().currentUser else {
+                print("No user is currently signed in.")
+                return
+            }
+            
+            let uid = currentUser.uid
+            
+            // Reference to Firestore
+            let db = Firestore.firestore()
+            
+            // Fetch the API key from the user's document
+            db.collection("users").document(uid).getDocument { document, error in
+                if let error = error {
+                    print("Error fetching API key: \(error.localizedDescription)")
+                } else if let document = document, document.exists, let data = document.data() {
+                    if let fetchedApiKey = data["apiKey"] as? String {
+                        self.apiKey = fetchedApiKey
+                    } else {
+                        print("API key not found for user ID \(uid).")
+                    }
+                } else {
+                    print("Document does not exist for user ID \(uid).")
+                }
+            }
+        }
+    }
+

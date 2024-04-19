@@ -8,6 +8,23 @@
 
 import SwiftUI
 
+struct GasButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding()
+            .background(Color(hex: 0xFA4A0C, opacity: 1))
+            .foregroundColor(.white)
+            .cornerRadius(12)
+            .shadow(color: Color.orange.opacity(0.5), radius: 10, x: 0, y: 4)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.orange, lineWidth: 2)
+            )
+            .scaleEffect(configuration.isPressed ? 0.95 : 1.0)
+            .animation(.easeInOut(duration: 0.2), value: configuration.isPressed)
+    }
+}
+
 extension AuthenticatedView where Unauthenticated == EmptyView {
   init(@ViewBuilder content: @escaping () -> Content) {
     self.unauthenticated = nil
@@ -54,11 +71,12 @@ struct AuthenticatedView<Content, Unauthenticated>: View where Content: View, Un
           .environmentObject(viewModel)
       }
     case .authenticated:
-      VStack {
-        Button("Enter Study Hub Here") {
-            presentingProfileScreen.toggle()
+        VStack {
+            Button("Enter Study Hub Here") {
+                presentingProfileScreen.toggle()
+            }
+            .buttonStyle(GasButtonStyle())
         }
-      }
       .fullScreenCover(isPresented: $presentingProfileScreen) {
         NavigationView {
           HomePageViewController()
