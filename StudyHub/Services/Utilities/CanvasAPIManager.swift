@@ -1,4 +1,5 @@
 import Foundation
+import Dispatch 
 
 // Define the Canvas API manager class
 class CanvasAPIManager {
@@ -60,35 +61,43 @@ class CanvasAPIManager {
     
     // Function to parse JSON data and process each item
     func parseJson(jsonData: Any, completion: @escaping (Result<[[String: Any]], Error>) -> Void) {
-        if let jsonArray = jsonData as? [[String: Any]] {
-            var results: [[String: Any]] = []
-            
-            // Iterate through each item in the array
-            for item in jsonArray {
-                // Process each item and add to the results array
-                let className = getClassName(classData: item)
-                let calendarLink = getCalendarData(classData: item)
-                
-                // Fetch the ICS data and handle it
-                fetchICS(from: calendarLink) { jsonString in
-                    guard let jsonString = jsonString else {
-                        completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch ICS data"])))
-                        return
-                    }
-                    
-                    // Process the fetched data as needed (e.g., printing or storing)
-                    var processedItem = item
-                    processedItem["icsData"] = jsonString
-                    results.append(processedItem)
-                }
-            }
-            
-            // Complete with the results array
-            completion(.success(results))
-        } else {
+        guard let jsonArray = jsonData as? [[String: Any]] else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "JSON data is neither an array nor a dictionary"])))
+            return
+        }
+        
+        var results: [[String: Any]] = []
+        let dispatchGroup = DispatchGroup() // Create a dispatch group to track asynchronous operations
+        
+        for item in jsonArray {
+            dispatchGroup.enter() // Enter the group before starting the asynchronous operation
+            
+            // Process each item and fetch ICS data
+            let calendarLink = getCalendarData(classData: item)
+            
+            fetchICS(from: calendarLink) { jsonString in
+                guard let jsonString = jsonString else {
+                    completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch ICS data"])))
+                    dispatchGroup.leave() // Leave the group on failure
+                    return
+                }
+                
+                // Process the fetched data as needed
+                var processedItem = item
+                processedItem["icsData"] = jsonString
+                results.append(processedItem)
+                
+                dispatchGroup.leave() // Leave the group after processing the item
+            }
+        }
+        
+        // Wait for all asynchronous operations to complete
+        dispatchGroup.notify(queue: .main) {
+            // Now you know all asynchronous operations have completed
+            completion(.success(results))
         }
     }
+
     
     // Function to fetch the .ics file from the given URL and return the JSON string using a completion handler
     func fetchICS(from url: String, completion: @escaping (String?) -> Void) {
@@ -126,6 +135,7 @@ class CanvasAPIManager {
             
             // Parse the ICS content and return the JSON string
             let jsonString = self.parseICS(icsContent)
+            
             completion(jsonString)
         }
         
@@ -134,13 +144,14 @@ class CanvasAPIManager {
     }
     
     // Function to parse .ics content and convert it to JSON format
+    // Function to parse .ics content and convert it to JSON format
     func parseICS(_ icsContent: String) -> String? {
-        // Dictionary to hold JSON data
-        var jsonDictionary = [String: Any]()
+        // Dictionary to hold the organized data
+        var organizedData = [String: [String: String]]()
         
         // Variables to hold current event data
-        var currentEvent = [String: Any]()
-        var events = [[String: Any]]()
+        var currentEvent = [String: String]()
+        var courseCode: String? = nil
         
         // Split the content into lines
         let lines = icsContent.components(separatedBy: "\n")
@@ -153,7 +164,28 @@ class CanvasAPIManager {
             if lineTrimmed == "BEGIN:VEVENT" {
                 currentEvent = [:]
             } else if lineTrimmed == "END:VEVENT" {
-                events.append(currentEvent)
+                // Process current event
+                if let summary = currentEvent["SUMMARY"],
+                   let dtstart = currentEvent["DTSTART"] ?? currentEvent["DTSTART;VALUE=DATE;VALUE=DATE"],
+                   let range = summary.range(of: "[", options: .backwards) {
+                    
+                    // Extract the course code from the summary
+                    courseCode = String(summary[range.lowerBound...])
+                    
+                    // Remove the brackets and any trailing whitespace from the course code
+                    courseCode = courseCode?.replacingOccurrences(of: "[", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+                    
+                    // Extract the assignment title
+                    let assignmentTitle = summary.components(separatedBy: " [")[0]
+                    
+                    // Ensure course code exists in the dictionary
+                    if organizedData[courseCode!] == nil {
+                        organizedData[courseCode!] = [:]
+                    }
+                    
+                    // Add the assignment title and due date to the dictionary
+                    organizedData[courseCode!]?[assignmentTitle] = dtstart
+                }
             } else {
                 // Split the line into key and value
                 let components = lineTrimmed.split(separator: ":")
@@ -167,20 +199,23 @@ class CanvasAPIManager {
             }
         }
         
-        // Add the events to the JSON dictionary
-        jsonDictionary["events"] = events
-        
-        // Convert the dictionary to JSON data
-        if let jsonData = try? JSONSerialization.data(withJSONObject: jsonDictionary, options: [.prettyPrinted]) {
-            // Convert the JSON data to a string and return it
+        // Convert the organized data dictionary to JSON format
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: organizedData, options: [.prettyPrinted])
+            // Convert the JSON data to a string
             if let jsonString = String(data: jsonData, encoding: .utf8) {
                 return jsonString
             }
+        } catch {
+            // Handle JSON serialization error
+            print("Error serializing JSON data: \(error)")
+            return nil
         }
         
         // Return nil if conversion to JSON failed
         return nil
     }
+
     
     // Function to get the class name from class data
     func getClassName(classData: Any) -> String {
@@ -196,9 +231,32 @@ class CanvasAPIManager {
     // Function to get calendar data from class data
     func getCalendarData(classData: Any) -> String {
         if let jsonDict = classData as? [String: Any], let calendarData = jsonDict["calendar"] as? [String: String], let icsLink = calendarData["ics"] {
-            return icsLink
+            return convertURL(icsLink) ?? ""
         }
         
         return ""
     }
+    
+    func convertURL(_ urlString: String) -> String? {
+        // Define the base domain to replace the domain in the URL
+        let targetBaseDomain = "https://webcourses.ucf.edu"
+        
+        // Define the possible base domains in the input URL
+        let baseDomains = ["https://canvas.instructure.com", "https://webcourses.ucf.edu"]
+        
+        // Iterate through each possible base domain
+        for baseDomain in baseDomains {
+            // Check if the input URL starts with the current base domain
+            if urlString.hasPrefix(baseDomain) {
+                // Get the relative path from the URL by removing the base domain
+                let relativePath = urlString.dropFirst(baseDomain.count)
+                // Combine the target base domain with the relative path
+                return targetBaseDomain + relativePath
+            }
+        }
+        
+        // Return nil if the input URL does not start with any of the known base domains
+        return nil
+    }
+
 }

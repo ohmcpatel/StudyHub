@@ -60,7 +60,6 @@ struct HomePageViewController: View {
                     print("Error getting location: \(error.localizedDescription)")
                 }
             }
-            
         }
     }
     

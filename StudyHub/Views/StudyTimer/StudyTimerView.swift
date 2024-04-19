@@ -29,7 +29,7 @@ struct StudyTimerView: View {
                     .cornerRadius(25)
                     .overlay(
                             RoundedRectangle(cornerRadius: 20)
-                                .stroke(Color.orange, lineWidth: 7)
+                                .stroke(Color(hex: 0xFA4A0C, opacity: 1), lineWidth: 7)
                         )
                 
                 Slider(value: $vm.minutes, in: 1...60, step: 1)
@@ -37,7 +37,7 @@ struct StudyTimerView: View {
                     .disabled(vm.isActive)
                     .animation(.easeInOut, value: vm.minutes)
                     .frame(width: width)
-                    .accentColor(.orange)
+                    .accentColor(Color(hex: 0xFA4A0C, opacity: 1))
 
                 HStack(spacing:50) {
                     Button("Start") {
